@@ -1,15 +1,14 @@
 angular-feeds
 =============
-## Introduction
-Angular Feeds is a angular module intended for working with Atom, RSS feeds easier. It internally uses Google Feeds API. 
-However, it is up to the developer if you need to use some other feed parsers.
+### Introduction
+Angular Feeds renders Atom, RSS and Media feeds using simple HTML markup (aka Directives).
+It internally uses Google Feeds for reading & parsing feeds and comes with default template for displaying feed content.
+You can also configure it to use a different template of your choice.
 
-
-### Get Started with any of the following options
-
-* Clone the repo - git@github.com:siddii/angular-feeds.git
-* Install `angular-timer` using [Bower](http://bower.io) - `bower install angular-feeds`
-
+### Get Started
+With any of the following options
+* Clone the repo - `git@github.com:siddii/angular-feeds.git`
+* Install `angular-feeds` using [Bower](http://bower.io) - `bower install angular-feeds`
 
 ### Examples
 Please checkout the examples to understand the usage of this module - http://siddii.github.io/angular-feeds/
