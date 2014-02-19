@@ -1,4 +1,4 @@
-angular.module('angular-my-feeds', [
+angular.module('my-feeds', [
     'feeds'
   ])
   .controller('MyFeedsController', ['$scope', '$compile', '$http', '$rootScope', function ($scope, $compile, $http, $rootScope) {
@@ -16,7 +16,8 @@ angular.module('angular-my-feeds', [
       restrict: 'A',
       controller: ['$scope', '$element', '$attrs', '$timeout', function ($scope, $element) {
         var feed = $scope.feed;
-        var feedHTML = "<feed url='" + feed.url + "' count='" + feed.count + "' post-render='feedPostRender'/>";
+        console.log('##### feed.summary = ', feed.summary);
+        var feedHTML = "<feed url='" + feed.url + "' count='" + feed.count + "' summary=" + (feed.summary ? 'true' : 'false') + " post-render='feedPostRender'/>";
         $element.append($compile(feedHTML)($scope));
       }]
     };
