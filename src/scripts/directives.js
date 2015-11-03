@@ -4,7 +4,8 @@ angular.module('feeds-directives', []).directive('feed', ['feedService', '$compi
   return  {
     restrict: 'E',
     scope: {
-      summary: '=summary'
+      summary: '=summary',
+      url: '=url'
     },
     controller: ['$scope', '$element', '$attrs', '$timeout', function ($scope, $element, $attrs, $timeout) {
       $scope.$watch('finishedLoading', function (value) {
@@ -17,10 +18,20 @@ angular.module('feeds-directives', []).directive('feed', ['feedService', '$compi
 
       $scope.feeds = [];
 
+      $scope.$watch(function() {
+        return $scope.url; 
+      }, function(val) {
+        // reset state
+        $scope.error = "";
+        $scope.feeds = [];
+        setFeeds(val);
+      });
+
       var spinner = $templateCache.get('feed-spinner.html');
       $element.append($compile(spinner)($scope));
 
       function renderTemplate(templateHTML, feedsObj) {
+        $element.empty();
         $element.append($compile(templateHTML)($scope));
         if (feedsObj) {
           for (var i = 0; i < feedsObj.length; i++) {
@@ -28,8 +39,8 @@ angular.module('feeds-directives', []).directive('feed', ['feedService', '$compi
           }
         }
       }
-      
-      $attrs.observe('url', function(url){
+
+      function setFeeds(url) {
         feedService.getFeeds(url, $attrs.count).then(function (feedsObj) {
           if ($attrs.templateUrl) {
             $http.get($attrs.templateUrl, {cache: $templateCache}).success(function (templateHtml) {
@@ -45,9 +56,9 @@ angular.module('feeds-directives', []).directive('feed', ['feedService', '$compi
           renderTemplate($templateCache.get('feed-list.html'));
         }).finally(function () {
           $element.find('.spinner').slideUp();
-          $scope.$evalAsync('finishedLoading = true')
-        });          
-      });
+          $scope.$evalAsync('finishedLoading = true');
+        });
+      }
     }]
-  }
+  };
 }]);
